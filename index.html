@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Countdown til juleaften!</title>
+    <meta name="description" content="Tæller ned til juleaften 2018.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      body {
+        /* Fix til at få baggrunden til at fylde hele vinduet */
+        background: url(christmas.jpg) no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+      }
+      #result {
+        background-color: white;
+        opacity: 0.8;
+        margin-top: 8%;
+        padding: 20px;
+        color: red;
+        text-align: center;
+        font-size: 60px;
+        border-radius: 10px;
+        text-shadow: 0 1px 1px black;
+        font-family: Arial, Helvetica, sans-serif;
+        letter-spacing: 1px;
+        box-shadow: 0 2px 8px black;
+      }
+      #gift {
+        background: url(gift.png);
+        position: absolute;
+        width: 240px;
+        height: 230px;
+        bottom: 10px;
+        right: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <p id="result"><i>Henter...</i></p>
+    <div id="gift" onclick="alert('Julegaven åbnes automatisk d. 24. december efter kl. 18.00.')"></div>
+
+    <script>
+      // Tidspunktet vi tæller ned til
+      var countDownDate = new Date("Dec 24, 2018 18:00:00").getTime();
+
+      // Opdaterer countdown hvert sekund
+      var x = setInterval(function() {
+
+          // Dags dato og tidspunkt
+          var now = new Date().getTime();
+          
+          // Finder distancen mellem tidspunktet vi tæller ned til, kontra dags dato og tidspunkt
+          var distance = countDownDate - now;
+          
+          // Beregning af dage, timer, minutter og sekunder
+          var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+          
+          // Udskriver resultatet til id="result"
+          var text = "<b>Det er juleaften om:</b><br>" +
+          days + " dage, " + hours + " timer, " + minutes + " minutter og " + seconds + " sekunder.";
+          document.getElementById("result").innerHTML = text;
+          
+          // Giver besked, hvis tidspunktet er nået + gaven bliver åbnet
+          if (distance < 0) {
+              clearInterval(x);
+              document.getElementById("result").innerHTML = "DET ER JULEAFTEN NU!";
+              document.getElementById("gift").style.backgroundImage = "url('gift2.png')";
+          }
+      }, 1000);
+    </script>
+  </body>
+</html>
