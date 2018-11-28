@@ -1,10 +1,13 @@
-<!DOCTYPE HTML>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="da-DK">
   <head>
-    <meta charset="utf-8">
-    <title>Countdown til juleaften!</title>
+    <meta charset="UTF-8">
+    <title>Countdown til juleaften 2018!</title>
+    <!-- Meta Content -->
     <meta name="description" content="Tæller ned til juleaften 2018. Gaven åbnes efter kl. 18 d. 24/12.">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+    <meta name="author" content="N4.DK">
+    <!-- Ser ikke kønt ud på små devices, derfor er viewport udkommenteret -->
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <style>
       body {
         /* Fix til at få baggrunden til at fylde hele vinduet */
@@ -13,8 +16,7 @@
         -moz-background-size: cover;
         -o-background-size: cover;
         background-size: cover;
-
-        /* Fix til at fjerne scrollbar pga. sne*/
+        /* Fix til at fjerne fremtvunget scrollbar pga. sne*/
         overflow: hidden;
       }
       #result {
@@ -51,27 +53,21 @@
     <script>
       // Tidspunktet vi tæller ned til
       var countDownDate = new Date("Dec 24, 2018 18:00:00").getTime();
-
       // Opdaterer countdown hvert sekund
       var x = setInterval(function() {
-
         // Dags dato og tidspunkt
         var now = new Date().getTime();
-          
         // Finder distancen mellem tidspunktet vi tæller ned til, kontra dags dato og tidspunkt
         var distance = countDownDate - now;
-          
         // Beregning af dage, timer, minutter og sekunder
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-          
         // Udskriver resultatet til id="result"
         var text = "<b>Det er juleaften om:</b><br>" +
         days + " dage, " + hours + " timer, " + minutes + " minutter og " + seconds + " sekunder.";
         document.getElementById("result").innerHTML = text;
-          
         // Giver besked, hvis tidspunktet er nået + gaven bliver åbnet
         if (distance < 0) {
           clearInterval(x);
@@ -79,15 +75,13 @@
           document.getElementById("gift").style.backgroundImage = "url('gift2.png')";
         }
       }, 1000);
-
       // Sne
       var canvas = document.querySelector('.snow'),
         ctx = canvas.getContext('2d'),
         windowW = window.innerWidth,
         windowH = window.innerHeight,
-        numFlakes = 200,
+        numFlakes = 150,
         flakes = [];
-
       function Flake(x, y) {
         var maxWeight = 5, maxSpeed = 3;  
         this.x = x;
@@ -104,37 +98,28 @@
           this.y += this.speed;
         }
       }
-
       function init() {
-        var i = numFlakes,
-          flake, x, y;
-        
+        var i = numFlakes, flake, x, y; 
         while (i--) {
           x = randomBetween(0, windowW, true);
           y = randomBetween(0, windowH, true);
-          
           flake = new Flake(x, y);
           flakes.push(flake);
         }
-        
         scaleCanvas();
         loop();  
       }
-
       function scaleCanvas() {
         canvas.width = windowW;
         canvas.height = windowH;
       }
-
       function loop() {
-        var i = flakes.length, z, dist, flakeA, flakeB;
-        
+        var i = flakes.length, z, dist, flakeA, flakeB; 
         // Clear Canvas
         ctx.save();
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.clearRect(0, 0, windowW, windowH);
         ctx.restore();
-        
         // Loop of Hell
         while (i--) {
           flakeA = flakes[i];
@@ -143,31 +128,25 @@
           ctx.arc(flakeA.x, flakeA.y, flakeA.weight, 0, 2 * Math.PI, false);
           ctx.fillStyle = 'rgba(255, 255, 255, ' + flakeA.alpha + ')';
           ctx.fill();
-          
           if (flakeA.y >= windowH) {
             flakeA.y = -flakeA.weight;
           }
         }
         requestAnimationFrame(loop);
       }
-
       function randomBetween(min, max, round) {
         var num = Math.random() * (max - min + 1) + min;
-
         if (round) {
           return Math.floor(num);
         } else {
           return num;
         }
       }
-
       function distanceBetween(vector1, vector2) {
         var dx = vector2.x - vector1.x,
             dy = vector2.y - vector1.y;
-
         return Math.sqrt(dx * dx + dy * dy);
       }
-
       init();
     </script>
   </body>
